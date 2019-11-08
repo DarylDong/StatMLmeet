@@ -11,5 +11,5 @@ data_sim = hdf5_file["sims_z0"]
 print(data_sim.shape[0])
 
 plt.figure(32) 
-plt.imshow(data_sim[53, :, 60, :] > 0)
+plt.imshow(data_sim[53, :, 60, :], cmap='gray')
 plt.show() 
