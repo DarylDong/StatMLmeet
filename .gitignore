@@ -2,3 +2,7 @@
 *.png
 *.pdf
 *.nfs*
+zeldo/notebooks/logs/*
+zeldo/notebooks/Results/*
+zeldo/tests/logs/*
+zeldo/tests/Results/*

@@ -165,15 +165,15 @@ optimizer = tf.train.AdamOptimizer(FLAGS.learning_rate).minimize(loss)
 
 
 init_vars = [tf.local_variables_initializer(), tf.global_variables_initializer()]
-# gpu_options = tf.GPUOptions(allow_growth=True)
+gpu_options = tf.GPUOptions(allow_growth=True)
 
 
 # In[ ]:
 
 
 # Training loop
-# with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
-with tf.Session(config=tf.ConfigProto()) as sess:
+with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
+#with tf.Session(config=tf.ConfigProto()) as sess:
 
     writer = tf.summary.FileWriter('./logs', sess.graph)
 
