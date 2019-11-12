@@ -56,10 +56,17 @@ tf.app.flags.DEFINE_string('f', '', 'kernel')
 
 tf.flags.DEFINE_float('learning_rate', .0005, 'Initial learning rate.')
 tf.flags.DEFINE_integer('epochs', 1, 'Number of steps to run trainer.')
+<<<<<<< HEAD
 tf.flags.DEFINE_integer('batch_size', 1, 'Minibatch size')
 tf.flags.DEFINE_integer('latent_dim', 8, 'Number of latent dimensions')
 tf.flags.DEFINE_integer('test_image_number', 5, 'Number of test images to recover during training')
 tf.flags.DEFINE_integer('inputs_decoder', 216, 'Size of decoder input layer')
+=======
+tf.flags.DEFINE_integer('batch_size', 2, 'Minibatch size')
+tf.flags.DEFINE_integer('latent_dim', 8, 'Number of latent dimensions')
+tf.flags.DEFINE_integer('test_image_number', 5, 'Number of test images to recover during training')
+tf.flags.DEFINE_integer('inputs_decoder', 49, 'Size of decoder input layer')
+>>>>>>> 7b9beca72910af79d20977dfc51a0e14d95fbd89
 tf.flags.DEFINE_string('dataset', 'zeldo', 'Dataset name [mnist, zeldo, fashion-mnist]')
 tf.flags.DEFINE_string('logdir', './logs', 'Logs folder')
 tf.flags.DEFINE_bool('plot_latent', True, 'Plot latent space')
@@ -109,6 +116,7 @@ with tf.variable_scope("DataPipe"):
 def encoder(X):
     activation = tf.nn.relu
     with tf.variable_scope("Encoder"):
+<<<<<<< HEAD
         x = tf.layers.conv3d(inputs=X, filters=16, kernel_size=[4,4,4], padding='same', activation=activation)
         x = tf.layers.conv3d(inputs=x, filters=16, kernel_size=[4,4,4], padding='same', activation=activation)
 #         x = tf.layers.conv3d(inputs=x, filters=64, kernel_size=[4,4,4], padding='same', activation=activation)
@@ -118,6 +126,13 @@ def encoder(X):
         x = tf.layers.dense(x, units=4*FLAGS.latent_dim)
         x = tf.layers.dense(x, units=2*FLAGS.latent_dim)
 
+=======
+        x = tf.layers.conv3d(inputs=X, filters=64, kernel_size=[4,4,4], padding='same', activation=activation)
+        x = tf.layers.conv3d(inputs=x, filters=64, kernel_size=[4,4,4], padding='same', activation=activation)
+        x = tf.layers.conv3d(inputs=x, filters=64, kernel_size=[4,4,4], padding='same', activation=activation)
+        x = tf.layers.flatten(x)
+
+>>>>>>> 7b9beca72910af79d20977dfc51a0e14d95fbd89
         # Local latent variables
         mean_ = tf.layers.dense(x, units=FLAGS.latent_dim, name='mean')
         std_dev = tf.nn.softplus(tf.layers.dense(x, units=FLAGS.latent_dim), name='std_dev')  # softplus to force >0
@@ -131,6 +146,7 @@ def encoder(X):
 def decoder(z):
     activation = tf.nn.relu
     with tf.variable_scope("Decoder"):
+<<<<<<< HEAD
         
         x = tf.layers.dense(z, units=FLAGS.inputs_decoder, activation=activation)
         x = tf.layers.dense(x, units=2*FLAGS.inputs_decoder, activation=activation)
@@ -146,6 +162,18 @@ def decoder(z):
 
         x = tf.contrib.layers.flatten(x)
 
+=======
+        x = tf.layers.dense(z, units=FLAGS.inputs_decoder, activation=activation)
+        x = tf.layers.dense(x, units=FLAGS.inputs_decoder, activation=activation)
+        recovered_size = int(np.sqrt(FLAGS.inputs_decoder))
+        x = tf.reshape(x, [-1, recovered_size, recovered_size, recovered_size, 1])
+
+        x = tf.layers.conv3d_transpose(x, filters=64, kernel_size=4, strides=1, padding='same', activation=activation)
+        x = tf.layers.conv3d_transpose(x, filters=64, kernel_size=4, strides=1, padding='same', activation=activation)
+        x = tf.layers.conv3d_transpose(x, filters=64, kernel_size=4, strides=1, padding='same', activation=activation)
+
+        x = tf.contrib.layers.flatten(x)
+>>>>>>> 7b9beca72910af79d20977dfc51a0e14d95fbd89
         x = tf.layers.dense(x, units= nGrid*nGrid*nGrid, activation=None)
 
         x = tf.layers.dense(x, units=nGrid*nGrid*nGrid, activation=tf.nn.sigmoid)
@@ -174,15 +202,24 @@ optimizer = tf.train.AdamOptimizer(FLAGS.learning_rate).minimize(loss)
 
 
 init_vars = [tf.local_variables_initializer(), tf.global_variables_initializer()]
+<<<<<<< HEAD
 # gpu_options = tf.GPUOptions(allow_growth=True)
+=======
+gpu_options = tf.GPUOptions(allow_growth=True)
+>>>>>>> 7b9beca72910af79d20977dfc51a0e14d95fbd89
 
 
 # In[ ]:
 
 
 # Training loop
+<<<<<<< HEAD
 # with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
 with tf.Session(config=tf.ConfigProto()) as sess:
+=======
+with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
+#with tf.Session(config=tf.ConfigProto()) as sess:
+>>>>>>> 7b9beca72910af79d20977dfc51a0e14d95fbd89
 
     writer = tf.summary.FileWriter('./logs', sess.graph)
 
