@@ -14,13 +14,13 @@ for z in zID:
 
 	train_shape = (len(addrs), ng, ng, ng)
 	hdf5_file = h5py.File(hdf5_path, mode='w')
-	hdf5_file.create_dataset("sims_z" + str(z), train_shape, np.float)
+	hdf5_file.create_dataset("rho", train_shape, np.float)
 
 	for i in range(len(addrs)):
 		#print('Data: {}/{}'.format(i, len(addrs))
 		addr = addrs[i]
 		rho1d = np.array(np.genfromtxt(addr, dtype = "f8"))
 		rho3d = np.reshape(rho1d, (ng, ng, ng), order="F")
-		hdf5_file["sims_z" + str(z)][i, ...] = rho3d[None]
+		hdf5_file["rho"][i, ...] = rho3d[None]
 
 	hdf5_file.close()
