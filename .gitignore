@@ -1,12 +1,8 @@
 *.hdf5
-*.png
 *.pdf
 *.nfs*
 zeldo/notebooks/logs/*
 zeldo/notebooks/Results/*
 zeldo/tests/logs/*
 zeldo/tests/Results/*
-<<<<<<< HEAD
 zeldo/notebooks/.ipynb_checkpoints/*
-=======
->>>>>>> 7b9beca72910af79d20977dfc51a0e14d95fbd89
