@@ -96,13 +96,13 @@ if ifPlotTrain:
 
     plt.savefig('Plots/zeldo_snaps.png')
     plt.tight_layout()
-#     plt.show()
+    plt.clf()
 
 BUFFER_SIZE = 90
 BATCH_SIZE = 32
 lr_generator = 1e-4
 lr_discriminator = 1e-4
-EPOCHS = 500
+EPOCHS = 50
 noise_dim = 64
 num_examples_to_generate = 1
 
@@ -168,7 +168,7 @@ if ifPlotRandom:
 
     ax[0].set_ylabel('Random generated', rotation=0, fontsize=30, labelpad=120, color = 'r')
     plt.tight_layout()
-#     plt.show()
+    plt.clf()
 
 
 
@@ -342,7 +342,7 @@ def generate_and_save_images(model, epoch, test_input):
       plt.tight_layout()
 
   plt.savefig('Plots/image_at_epoch_{:04d}.png'.format(epoch))
-#   plt.show()
+  plt.clf()
 
 
 # ## Train the model
@@ -353,14 +353,14 @@ def generate_and_save_images(model, epoch, test_input):
 gen_loss_arr, disc_loss_arr = train(train_dataset, EPOCHS)
 
 
-plt.figure(232, figsize = (12, 6))
+plt.figure(2732, figsize = (12, 6))
 plt.plot(gen_loss_arr, label='gen_loss')
 plt.plot(disc_loss_arr, label ='disc_loss')
 plt.legend()
 plt.xlabel('epochs')
 plt.ylabel('loss')
 plt.savefig('Plots/loss.png')
-
+plt.clf()
 
 # Restore the latest checkpoint.
 
@@ -386,7 +386,7 @@ def generate_images(model, epoch, test_input):
   plt.tight_layout()
 
   plt.savefig('Plots/image_at_epoch_{:04d}.png'.format(epoch))
-#   plt.show()
+  plt.clf()
 
 
 ifPlotGen = True
