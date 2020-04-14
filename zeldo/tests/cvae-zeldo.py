@@ -56,10 +56,10 @@ tf.app.flags.DEFINE_string('f', '', 'kernel')
 
 tf.flags.DEFINE_float('learning_rate', .0005, 'Initial learning rate.')
 tf.flags.DEFINE_integer('epochs', 1, 'Number of steps to run trainer.')
-tf.flags.DEFINE_integer('batch_size', 2, 'Minibatch size')
+tf.flags.DEFINE_integer('batch_size', 1, 'Minibatch size')
 tf.flags.DEFINE_integer('latent_dim', 8, 'Number of latent dimensions')
 tf.flags.DEFINE_integer('test_image_number', 5, 'Number of test images to recover during training')
-tf.flags.DEFINE_integer('inputs_decoder', 49, 'Size of decoder input layer')
+tf.flags.DEFINE_integer('inputs_decoder', 216, 'Size of decoder input layer')
 tf.flags.DEFINE_string('dataset', 'zeldo', 'Dataset name [mnist, zeldo, fashion-mnist]')
 tf.flags.DEFINE_string('logdir', './logs', 'Logs folder')
 tf.flags.DEFINE_bool('plot_latent', True, 'Plot latent space')
@@ -109,10 +109,14 @@ with tf.variable_scope("DataPipe"):
 def encoder(X):
     activation = tf.nn.relu
     with tf.variable_scope("Encoder"):
-        x = tf.layers.conv3d(inputs=X, filters=64, kernel_size=[4,4,4], padding='same', activation=activation)
-        x = tf.layers.conv3d(inputs=x, filters=64, kernel_size=[4,4,4], padding='same', activation=activation)
-        x = tf.layers.conv3d(inputs=x, filters=64, kernel_size=[4,4,4], padding='same', activation=activation)
+        x = tf.layers.conv3d(inputs=X, filters=16, kernel_size=[4,4,4], padding='same', activation=activation)
+        x = tf.layers.conv3d(inputs=x, filters=16, kernel_size=[4,4,4], padding='same', activation=activation)
+#         x = tf.layers.conv3d(inputs=x, filters=64, kernel_size=[4,4,4], padding='same', activation=activation)
         x = tf.layers.flatten(x)
+
+        x = tf.layers.dense(x, units=8*FLAGS.latent_dim)
+        x = tf.layers.dense(x, units=4*FLAGS.latent_dim)
+        x = tf.layers.dense(x, units=2*FLAGS.latent_dim)
 
         # Local latent variables
         mean_ = tf.layers.dense(x, units=FLAGS.latent_dim, name='mean')
@@ -127,16 +131,21 @@ def encoder(X):
 def decoder(z):
     activation = tf.nn.relu
     with tf.variable_scope("Decoder"):
+        
         x = tf.layers.dense(z, units=FLAGS.inputs_decoder, activation=activation)
-        x = tf.layers.dense(x, units=FLAGS.inputs_decoder, activation=activation)
-        recovered_size = int(np.sqrt(FLAGS.inputs_decoder))
+        x = tf.layers.dense(x, units=2*FLAGS.inputs_decoder, activation=activation)
+        x = tf.layers.dense(x, units=4*FLAGS.inputs_decoder, activation=activation)
+        x = tf.layers.dense(x, units=8*FLAGS.inputs_decoder, activation=activation)
+        
+        recovered_size = int(np.cbrt(FLAGS.inputs_decoder))
         x = tf.reshape(x, [-1, recovered_size, recovered_size, recovered_size, 1])
 
-        x = tf.layers.conv3d_transpose(x, filters=64, kernel_size=4, strides=1, padding='same', activation=activation)
-        x = tf.layers.conv3d_transpose(x, filters=64, kernel_size=4, strides=1, padding='same', activation=activation)
-        x = tf.layers.conv3d_transpose(x, filters=64, kernel_size=4, strides=1, padding='same', activation=activation)
+        x = tf.layers.conv3d_transpose(x, filters=16, kernel_size=4, strides=1, padding='same', activation=activation)
+        x = tf.layers.conv3d_transpose(x, filters=16, kernel_size=4, strides=1, padding='same', activation=activation)
+#         x = tf.layers.conv3d_transpose(x, filters=64, kernel_size=4, strides=1, padding='same', activation=activation)
 
         x = tf.contrib.layers.flatten(x)
+
         x = tf.layers.dense(x, units= nGrid*nGrid*nGrid, activation=None)
 
         x = tf.layers.dense(x, units=nGrid*nGrid*nGrid, activation=tf.nn.sigmoid)
@@ -165,15 +174,15 @@ optimizer = tf.train.AdamOptimizer(FLAGS.learning_rate).minimize(loss)
 
 
 init_vars = [tf.local_variables_initializer(), tf.global_variables_initializer()]
-gpu_options = tf.GPUOptions(allow_growth=True)
+# gpu_options = tf.GPUOptions(allow_growth=True)
 
 
 # In[ ]:
 
 
 # Training loop
-with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
-#with tf.Session(config=tf.ConfigProto()) as sess:
+# with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
+with tf.Session(config=tf.ConfigProto()) as sess:
 
     writer = tf.summary.FileWriter('./logs', sess.graph)
 
@@ -187,67 +196,67 @@ with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
         
         
 
-#         flag = True  # Show only first batch of epoch
+        flag = True  # Show only first batch of epoch
 
-#         while True:
-#             try:
-#                 sess.run(optimizer)
-#                 if flag:
-#                     # Get input and recover output images comparison
-#                     summ, target, output_ = sess.run([merged_summary_op, input_batch, output])
-#                     f, axarr = plt.subplots(FLAGS.test_image_number, 2)
+        while True:
+            try:
+                sess.run(optimizer)
+                if flag:
+                    # Get input and recover output images comparison
+                    summ, target, output_ = sess.run([merged_summary_op, input_batch, output])
+                    f, axarr = plt.subplots(FLAGS.test_image_number, 2)
 
-#                     for j in range(FLAGS.test_image_number):
-#                         for pos, im in enumerate([target, output_]):
-#                             axarr[j, pos].imshow(im[j].reshape((nGrid, nGrid, nGrid))[0], cmap='gray')
-#                             axarr[j, pos].axis('off')
-#                             print(j)
+                    for j in range(FLAGS.test_image_number):
+                        for pos, im in enumerate([target, output_]):
+                            axarr[j, pos].imshow(im[j].reshape((nGrid, nGrid, nGrid))[0], cmap='gray')
+                            axarr[j, pos].axis('off')
+                            print(j)
 
-#                     plt.savefig(os.path.join(results_folder, 'Train/Epoch_{}').format(epoch))
-#                     plt.close(f)
-#                     flag = False
-#                     writer.add_summary(summ, epoch)
+                    plt.savefig(os.path.join(results_folder, 'Train/Epoch_{}').format(epoch))
+                    plt.close(f)
+                    flag = False
+                    writer.add_summary(summ, epoch)
 
-#                     # Create artificial image from unit norm sample
-#                     artificial_image = sess.run(output, feed_dict={z: np.random.normal(0, 1, (1, FLAGS.latent_dim))})
-#                     plt.figure()
-#                     with sns.axes_style("white"):
-#                         plt.imshow(artificial_image[0].reshape((nGrid, nGrid, nGrid))[0], cmap='gray')
-#                     plt.savefig(os.path.join(results_folder, 'Test/{}'.format(epoch)))
-#                     plt.close()
+                    # Create artificial image from unit norm sample
+                    artificial_image = sess.run(output, feed_dict={z: np.random.normal(0, 1, (1, FLAGS.latent_dim))})
+                    plt.figure()
+                    with sns.axes_style("white"):
+                        plt.imshow(artificial_image[0].reshape((nGrid, nGrid, nGrid))[0], cmap='gray')
+                    plt.savefig(os.path.join(results_folder, 'Test/{}'.format(epoch)))
+                    plt.close()
 
-#                     # Create plot of latent space (only if latent dimensions are 2)
-#                     if FLAGS.latent_dim == 2 and FLAGS.plot_latent:
-#                         coords = sess.run(z, feed_dict={input_batch: test_images[..., np.newaxis]/255.})
-#                         colormap = ListedColormap(sns.color_palette(sns.hls_palette(10, l=.45 , s=.8)).as_hex())
-#                         plt.scatter(coords[:, 0], coords[:, 1], c=test_labels, cmap=colormap)
+                    # Create plot of latent space (only if latent dimensions are 2)
+                    if FLAGS.latent_dim == 2 and FLAGS.plot_latent:
+                        coords = sess.run(z, feed_dict={input_batch: test_images[..., np.newaxis]/255.})
+                        colormap = ListedColormap(sns.color_palette(sns.hls_palette(10, l=.45 , s=.8)).as_hex())
+                        plt.scatter(coords[:, 0], coords[:, 1], c=test_labels, cmap=colormap)
 
-#                         cbar = plt.colorbar()
+                        cbar = plt.colorbar()
 
-#                         plt.axis('off')
-#                         plt.title('Latent space')
-#                         plt.savefig(os.path.join(results_folder, 'Test/Latent_{}'.format(epoch)))
-#                         plt.close()
+                        plt.axis('off')
+                        plt.title('Latent space')
+                        plt.savefig(os.path.join(results_folder, 'Test/Latent_{}'.format(epoch)))
+                        plt.close()
 
-#             except tf.errors.OutOfRangeError:
-#                 break
+            except tf.errors.OutOfRangeError:
+                break
 
-# #         # Create mesh grid of values
-# #         values = np.arange(-3, 4, .5)
-# #         xx, yy = np.meshgrid(values, values)
-# #         input_holder = np.zeros((1, 2))
-# #         # Matrix that will contain the grid of images
-# #         container = np.zeros((28 * len(values), 28 * len(values)))
+#         # Create mesh grid of values
+#         values = np.arange(-3, 4, .5)
+#         xx, yy = np.meshgrid(values, values)
+#         input_holder = np.zeros((1, 2))
+#         # Matrix that will contain the grid of images
+#         container = np.zeros((28 * len(values), 28 * len(values)))
 
-# #         for row in range(xx.shape[0]):
-# #             for col in range(xx.shape[1]):
-# #                 input_holder[0, :] = [xx[row, col], yy[row, col]]
-# #                 artificial_image = sess.run(output, feed_dict={z: input_holder})
-# #                 container[row * 28: (row + 1) * 28, col * 28: (col + 1) * 28] = np.squeeze(artificial_image)
+#         for row in range(xx.shape[0]):
+#             for col in range(xx.shape[1]):
+#                 input_holder[0, :] = [xx[row, col], yy[row, col]]
+#                 artificial_image = sess.run(output, feed_dict={z: input_holder})
+#                 container[row * 28: (row + 1) * 28, col * 28: (col + 1) * 28] = np.squeeze(artificial_image)
 
-# #         plt.imshow(container, cmap='gray')
-# #         plt.savefig(os.path.join(results_folder, 'Test/Space_{}'.format(epoch)))
-# #         plt.close(  )
+#         plt.imshow(container, cmap='gray')
+#         plt.savefig(os.path.join(results_folder, 'Test/Space_{}'.format(epoch)))
+#         plt.close(  )
 
 
 # In[ ]:
