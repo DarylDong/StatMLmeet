@@ -290,16 +290,16 @@ def train_step(images):
 
 
 def train(dataset, epochs):
+
+  gen_loss_arr = [] 
+  disc_loss_arr = []
+
   for epoch in range(epochs):
     start = time.time()
-    gen_loss_arr = []
-    disc_loss_arr = []
 
     for image_batch in dataset:
       image_batch = np.expand_dims(image_batch, 4)
       gen_loss, disc_loss = train_step(image_batch)
-      gen_loss_arr = np.append(gen_loss_arr, gen_loss)
-      disc_loss_arr = np.append(disc_loss_arr, disc_loss)
       
 
     # Produce images for the GIF as we go
@@ -315,6 +315,9 @@ def train(dataset, epochs):
 
     print ('Time for epoch {} is {} sec'.format(epoch + 1, time.time()-start), gen_loss, disc_loss)
     
+    disc_loss_arr = np.append(disc_loss_arr, disc_loss)
+    gen_loss_arr = np.append(gen_loss_arr, gen_loss)
+  
   return gen_loss_arr, disc_loss_arr
 
   # Generate after the final epoch
@@ -361,7 +364,7 @@ plt.xlabel('epochs')
 plt.ylabel('loss')
 plt.savefig('Plots/loss.png')
 plt.clf()
-
+print('loss shape', np.shape(gen_loss_arr))
 # Restore the latest checkpoint.
 
 # In[30]:
