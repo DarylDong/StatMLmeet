@@ -9,8 +9,6 @@ import PIL
 from tensorflow.keras import layers
 import time
 import matplotlib.pylab as plt
-
-
 from IPython import display
 
 from tensorflow.keras import backend as K
