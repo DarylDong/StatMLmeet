@@ -96,7 +96,7 @@ BATCH_SIZE = 2
 lr_generator = 1e-5
 lr_discriminator = 1e-5
 EPOCHS = 512
-noise_dim = 64
+noise_dim = 128
 num_examples_to_generate = 1
 
 
@@ -118,13 +118,13 @@ def make_generator_model():
     model.add(layers.Reshape((4, 4, 4, 2)))
     assert model.output_shape == (None, 4, 4, 4, 2) # Note: None is the batch size
 
-    model.add(tf.keras.layers.Conv3DTranspose(16, (7, 7, 7), strides=(4, 4, 4), padding='same', use_bias=False) )
-    assert model.output_shape == (None, 16, 16, 16, 16)
+    model.add(tf.keras.layers.Conv3DTranspose(128, (7, 7, 7), strides=(4, 4, 4), padding='same', use_bias=False) )
+    assert model.output_shape == (None, 16, 16, 16, 128)
     model.add(layers.BatchNormalization())
     model.add(layers.LeakyReLU())
     
-    model.add(tf.keras.layers.Conv3DTranspose(16, (7, 7, 7), strides=(2, 2, 2), padding='same', use_bias=False) )
-    assert model.output_shape == (None, 32, 32, 32, 16)
+    model.add(tf.keras.layers.Conv3DTranspose(128, (7, 7, 7), strides=(2, 2, 2), padding='same', use_bias=False) )
+    assert model.output_shape == (None, 32, 32, 32, 128)
     model.add(layers.BatchNormalization())
     model.add(layers.LeakyReLU())
 
@@ -168,11 +168,16 @@ print(np.min(generated_image), np.max(generated_image))
 
 def make_discriminator_model():
     model = tf.keras.Sequential()
-    model.add(layers.Conv3D(32, (7, 7, 7), strides=(2, 2, 2), padding='same', input_shape=(64, 64, 64, 1)) )
+    model.add(layers.Conv3D(128, (7, 7, 7), strides=(2, 2, 2), padding='same', input_shape=(64, 64, 64, 1)) )
     model.add(layers.LeakyReLU())
     model.add(layers.Dropout(0.3))
-    
-    model.add(layers.Conv3D(16, (5, 5, 5), strides=(1, 1, 1), padding='same') )
+     
+    model.add(layers.Conv3D(128, (7, 7, 7), strides=(1, 1, 1), padding='same') )
+    model.add(layers.LeakyReLU())
+    model.add(layers.Dropout(0.3))
+
+
+    model.add(layers.Conv3D(128, (5, 5, 5), strides=(1, 1, 1), padding='same') )
     model.add(layers.LeakyReLU())
     model.add(layers.Dropout(0.3))
 
