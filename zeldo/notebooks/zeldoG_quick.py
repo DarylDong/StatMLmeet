@@ -97,10 +97,10 @@ if ifPlotTrain:
     plt.clf()
 
 BUFFER_SIZE = 90
-BATCH_SIZE = 32
+BATCH_SIZE = 2
 lr_generator = 1e-4
 lr_discriminator = 1e-4
-EPOCHS = 50
+EPOCHS = 500
 noise_dim = 64
 num_examples_to_generate = 1
 
@@ -126,18 +126,18 @@ def make_generator_model():
     model.add(layers.Reshape((8, 8, 8, 2)))
     assert model.output_shape == (None, 8, 8, 8, 2) # Note: None is the batch size
 
-    model.add(tf.keras.layers.Conv3DTranspose(16, (7, 7, 7), strides=(2, 2, 2), padding='same', use_bias=False) )
-    assert model.output_shape == (None, 16, 16, 16, 16)
+    model.add(tf.keras.layers.Conv3DTranspose(128, (17, 17, 17), strides=(2, 2, 2), padding='same', use_bias=False) )
+    assert model.output_shape == (None, 16, 16, 16, 128)
     model.add(layers.BatchNormalization())
     model.add(layers.LeakyReLU())
 
     
-    model.add(tf.keras.layers.Conv3DTranspose(8, (5, 5, 5), strides=(2, 2, 2), padding='same', use_bias=False) )
-    assert model.output_shape == (None, 32, 32, 32, 8)
+    model.add(tf.keras.layers.Conv3DTranspose(128, (7, 7, 7), strides=(2, 2, 2), padding='same', use_bias=False) )
+    assert model.output_shape == (None, 32, 32, 32, 128)
     model.add(layers.BatchNormalization())
     model.add(layers.LeakyReLU())
 
-    model.add(tf.keras.layers.Conv3DTranspose(1, (3, 3, 3), strides=(2, 2, 2), padding='same', use_bias=False, activation='tanh') )
+    model.add(tf.keras.layers.Conv3DTranspose(1, (5, 5, 5), strides=(2, 2, 2), padding='same', use_bias=False, activation='tanh') )
     assert model.output_shape == (None, 64, 64, 64, 1)
 
     return model
@@ -177,18 +177,29 @@ print(np.min(generated_image), np.max(generated_image))
 
 def make_discriminator_model():
     model = tf.keras.Sequential()
-    model.add(layers.Conv3D(32, (7, 7, 7), strides=(2, 2, 2), padding='same', input_shape=(64, 64, 64, 1)) )
+    model.add(layers.Conv3D(128, (17, 17, 17), strides=(2, 2, 2), padding='same', input_shape=(64, 64, 64, 1)) )
     model.add(layers.LeakyReLU())
     model.add(layers.Dropout(0.3))
     
+
+    model.add(layers.Conv3D(128, (7, 7, 7), strides=(1, 1, 1), padding='same') )
+    model.add(layers.LeakyReLU())
+    model.add(layers.Dropout(0.3))
+
+
+    model.add(layers.Conv3D(64, (5, 5, 5), strides=(1, 1, 1), padding='same') )
+    model.add(layers.LeakyReLU())
+    model.add(layers.Dropout(0.3))
+
 
     model.add(layers.Conv3D(16, (5, 5, 5), strides=(1, 1, 1), padding='same') )
     model.add(layers.LeakyReLU())
     model.add(layers.Dropout(0.3))
 
     model.add(layers.Flatten())
+    model.add(layers.Dense(32))
+    model.add(layers.Dense(16))
     model.add(layers.Dense(1))
-
     return model
 
 
@@ -245,7 +256,7 @@ discriminator_optimizer = tf.keras.optimizers.Adam(lr_discriminator)
 
 
 
-checkpoint_dir = './training_checkpoints'
+checkpoint_dir = './training_checkpoints_long'
 checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt")
 checkpoint = tf.train.Checkpoint(generator_optimizer=generator_optimizer,
                                  discriminator_optimizer=discriminator_optimizer,
@@ -360,7 +371,7 @@ plt.plot(disc_loss_arr, label ='disc_loss')
 plt.legend()
 plt.xlabel('epochs')
 plt.ylabel('loss')
-plt.savefig('Plots/loss.png')
+plt.savefig('Plots/loss_long.png')
 plt.clf()
 print('loss shape', np.shape(gen_loss_arr))
 # Restore the latest checkpoint.
