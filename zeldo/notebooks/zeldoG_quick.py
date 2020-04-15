@@ -13,17 +13,13 @@ from IPython import display
 
 from tensorflow.keras import backend as K
 K.set_floatx('float32')
-
 import h5py
-
-
 # Activate TF2 behavior:
 from tensorflow.python import tf2
 if not tf2.enabled():
   import tensorflow.compat.v2 as tf
   tf.enable_v2_behavior()
   assert tf2.enabled()
-
 
 
 nGrid = 64
@@ -53,8 +49,6 @@ class zeldo_data:
 print(train_images.shape)
 
 
-
-
 # RESCALING IMAGES
 tmin = train_images.min()
 tmax = train_images.max()
@@ -62,7 +56,6 @@ print(tmin, tmax)
 train_images = (train_images - tmin) / (tmax - tmin) # Normalize the images to [-1, 1]
 test_images = (test_images - tmin) / (tmax - tmin)
 print(train_images.min(), train_images.max())
-
 
 
 def rotateit(image, theta, isseg=False):
@@ -94,13 +87,15 @@ if ifPlotTrain:
 
     plt.savefig('Plots/zeldo_snaps.png')
     plt.tight_layout()
-    plt.clf()
+    plt.show()
+
+
 
 BUFFER_SIZE = 90
 BATCH_SIZE = 2
-lr_generator = 1e-4
-lr_discriminator = 1e-4
-EPOCHS = 500
+lr_generator = 1e-5
+lr_discriminator = 1e-5
+EPOCHS = 128
 noise_dim = 64
 num_examples_to_generate = 1
 
@@ -113,31 +108,27 @@ train_dataset = tf.data.Dataset.from_tensor_slices(train_images).shuffle(BUFFER_
 # 
 # The generator uses `tf.keras.layers.Conv2DTranspose` (upsampling) layers to produce an image from a seed (random noise). Start with a `Dense` layer that takes this seed as input, then upsample several times until you reach the desired image size of 28x28x1. Notice the `tf.keras.layers.LeakyReLU` activation for each layer, except the output layer which uses tanh.
 
-
-
 def make_generator_model():
     model = tf.keras.Sequential()
     
-
-    model.add(layers.Dense(8*8*8*2, use_bias=False, input_shape=(noise_dim,)))
+    model.add(layers.Dense(4*4*4*2, use_bias=False, input_shape=(noise_dim,)))
     model.add(layers.BatchNormalization())
     model.add(layers.LeakyReLU())
 
-    model.add(layers.Reshape((8, 8, 8, 2)))
-    assert model.output_shape == (None, 8, 8, 8, 2) # Note: None is the batch size
+    model.add(layers.Reshape((4, 4, 4, 2)))
+    assert model.output_shape == (None, 4, 4, 4, 2) # Note: None is the batch size
 
-    model.add(tf.keras.layers.Conv3DTranspose(128, (17, 17, 17), strides=(2, 2, 2), padding='same', use_bias=False) )
-    assert model.output_shape == (None, 16, 16, 16, 128)
+    model.add(tf.keras.layers.Conv3DTranspose(16, (7, 7, 7), strides=(4, 4, 4), padding='same', use_bias=False) )
+    assert model.output_shape == (None, 16, 16, 16, 16)
     model.add(layers.BatchNormalization())
     model.add(layers.LeakyReLU())
-
     
-    model.add(tf.keras.layers.Conv3DTranspose(128, (7, 7, 7), strides=(2, 2, 2), padding='same', use_bias=False) )
-    assert model.output_shape == (None, 32, 32, 32, 128)
+    model.add(tf.keras.layers.Conv3DTranspose(16, (7, 7, 7), strides=(2, 2, 2), padding='same', use_bias=False) )
+    assert model.output_shape == (None, 32, 32, 32, 16)
     model.add(layers.BatchNormalization())
     model.add(layers.LeakyReLU())
 
-    model.add(tf.keras.layers.Conv3DTranspose(1, (5, 5, 5), strides=(2, 2, 2), padding='same', use_bias=False, activation='tanh') )
+    model.add(tf.keras.layers.Conv3DTranspose(1, (3, 3, 3), strides=(2, 2, 2), padding='same', use_bias=False, activation='tanh') )
     assert model.output_shape == (None, 64, 64, 64, 1)
 
     return model
@@ -166,7 +157,8 @@ if ifPlotRandom:
 
     ax[0].set_ylabel('Random generated', rotation=0, fontsize=30, labelpad=120, color = 'r')
     plt.tight_layout()
-    plt.clf()
+#     plt.clf()
+    plt.show()
 
 
 
@@ -174,38 +166,23 @@ print(np.min(noise), np.max(noise))
 print(np.min(generated_image), np.max(generated_image))
 
 
-
 def make_discriminator_model():
     model = tf.keras.Sequential()
-    model.add(layers.Conv3D(128, (17, 17, 17), strides=(2, 2, 2), padding='same', input_shape=(64, 64, 64, 1)) )
+    model.add(layers.Conv3D(32, (7, 7, 7), strides=(2, 2, 2), padding='same', input_shape=(64, 64, 64, 1)) )
     model.add(layers.LeakyReLU())
     model.add(layers.Dropout(0.3))
     
-
-    model.add(layers.Conv3D(128, (7, 7, 7), strides=(1, 1, 1), padding='same') )
-    model.add(layers.LeakyReLU())
-    model.add(layers.Dropout(0.3))
-
-
-    model.add(layers.Conv3D(64, (5, 5, 5), strides=(1, 1, 1), padding='same') )
-    model.add(layers.LeakyReLU())
-    model.add(layers.Dropout(0.3))
-
-
     model.add(layers.Conv3D(16, (5, 5, 5), strides=(1, 1, 1), padding='same') )
     model.add(layers.LeakyReLU())
     model.add(layers.Dropout(0.3))
 
     model.add(layers.Flatten())
-    model.add(layers.Dense(32))
-    model.add(layers.Dense(16))
     model.add(layers.Dense(1))
+
     return model
 
 
 # Use the (as yet untrained) discriminator to classify the generated images as real or fake. The model will be trained to output positive values for real images, and negative values for fake images.
-
-
 
 discriminator = make_discriminator_model()
 decision = discriminator(generated_image)
@@ -220,57 +197,38 @@ print ('d-real: ', decision)
 
 # ## Define the loss and optimizers
 # Define loss functions and optimizers for both models.
-
-
 # This method returns a helper function to compute cross entropy loss
 cross_entropy = tf.keras.losses.BinaryCrossentropy(from_logits=True)
 
-
 # ### Discriminator loss
-# 
 # This method quantifies how well the discriminator is able to distinguish real images from fakes. It compares the discriminator's predictions on real images to an array of 1s, and the discriminator's predictions on fake (generated) images to an array of 0s.
-
-
-
 def discriminator_loss(real_output, fake_output):
     real_loss = cross_entropy(tf.ones_like(real_output), real_output)
     fake_loss = cross_entropy(tf.zeros_like(fake_output), fake_output)
     total_loss = real_loss + fake_loss
     return total_loss
 
-
 # ### Generator loss
 # The generator's loss quantifies how well it was able to trick the discriminator. Intuitively, if the generator is performing well, the discriminator will classify the fake images as real (or 1). Here, we will compare the discriminators decisions on the generated images to an array of 1s.
-
-
-
 def generator_loss(fake_output):
     return cross_entropy(tf.ones_like(fake_output), fake_output)
 
 
 # The discriminator and the generator optimizers are different since we will train two networks separately.
-
-
 generator_optimizer = tf.keras.optimizers.Adam(lr_generator)
 discriminator_optimizer = tf.keras.optimizers.Adam(lr_discriminator)
 
 
-
-checkpoint_dir = './training_checkpoints_long'
+checkpoint_dir = './training_checkpoints'
 checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt")
 checkpoint = tf.train.Checkpoint(generator_optimizer=generator_optimizer,
                                  discriminator_optimizer=discriminator_optimizer,
                                  generator=generator,
                                  discriminator=discriminator)
 
-
 # ## Define the training loop
-
-
 # We will reuse this seed overtime (so it's easier)
 seed = tf.random.normal([num_examples_to_generate, noise_dim])
-
-
 
 # Notice the use of `tf.function`
 # This annotation causes the function to be "compiled".
@@ -354,15 +312,15 @@ def generate_and_save_images(model, epoch, test_input):
       plt.tight_layout()
 
   plt.savefig('Plots/image_at_epoch_{:04d}.png'.format(epoch))
-  plt.clf()
-
+  plt.show()
 
 # ## Train the model
 # Call the `train()` method defined above to train the generator and discriminator simultaneously. Note, training GANs can be tricky. It's important that the generator and discriminator do not overpower each other (e.g., that they train at a similar rate).
 # 
 # At the beginning of the training, the generated images look like random noise. As training progresses, the generated structure should look increasingly real. 
-
+print('training beings')
 gen_loss_arr, disc_loss_arr = train(train_dataset, EPOCHS)
+print('training ends')
 
 
 plt.figure(2732, figsize = (12, 6))
@@ -371,17 +329,13 @@ plt.plot(disc_loss_arr, label ='disc_loss')
 plt.legend()
 plt.xlabel('epochs')
 plt.ylabel('loss')
-plt.savefig('Plots/loss_long.png')
-plt.clf()
+plt.savefig('Plots/loss.png')
+plt.show()
 print('loss shape', np.shape(gen_loss_arr))
 # Restore the latest checkpoint.
 
-# In[30]:
-
 
 checkpoint.restore(tf.train.latest_checkpoint(checkpoint_dir))
-
-
 
 def generate_images(model, epoch, test_input):
   # Notice `training` is set to False.
@@ -398,7 +352,8 @@ def generate_images(model, epoch, test_input):
   plt.tight_layout()
 
   plt.savefig('Plots/image_at_epoch_{:04d}.png'.format(epoch))
-  plt.clf()
+#   plt.clf()
+  plt.show()
 
 
 ifPlotGen = True
@@ -431,8 +386,6 @@ if ifPlotTrain:
     plt.savefig('Plots/zeldo_snaps.png')
     plt.tight_layout()
     plt.show()
-
-
 
 
 
