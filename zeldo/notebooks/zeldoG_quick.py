@@ -95,7 +95,7 @@ BUFFER_SIZE = 90
 BATCH_SIZE = 2
 lr_generator = 1e-5
 lr_discriminator = 1e-5
-EPOCHS = 128
+EPOCHS = 512
 noise_dim = 64
 num_examples_to_generate = 1
 
