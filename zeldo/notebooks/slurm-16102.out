@@ -85,4 +85,39 @@ training beings
 [2K[2KTime for epoch 16 is 168.2928981781006 sec tf.Tensor(20.277676, shape=(), dtype=float32) tf.Tensor(0.0151532255, shape=(), dtype=float32)
 [2K[2KTime for epoch 17 is 168.2968785762787 sec tf.Tensor(111.239975, shape=(), dtype=float32) tf.Tensor(7.045525e-05, shape=(), dtype=float32)
 [2K[2KTime for epoch 18 is 168.20735955238342 sec tf.Tensor(9.136187, shape=(), dtype=float32) tf.Tensor(0.0033785326, shape=(), dtype=float32)
+[2K[2KTime for epoch 19 is 168.27718043327332 sec tf.Tensor(3.3035252, shape=(), dtype=float32) tf.Tensor(0.076945394, shape=(), dtype=float32)
+[2K/homes/nramachandra/anaconda3/envs/tf_gpu_14/lib/python3.6/site-packages/matplotlib/pyplot.py:514: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).
+  max_open_warning, RuntimeWarning)
+[2KTime for epoch 20 is 168.22578644752502 sec tf.Tensor(7.1345787, shape=(), dtype=float32) tf.Tensor(0.0150599, shape=(), dtype=float32)
+[2K[2KTime for epoch 21 is 168.2034273147583 sec tf.Tensor(8.91991, shape=(), dtype=float32) tf.Tensor(0.0064339642, shape=(), dtype=float32)
+[2K[2KTime for epoch 22 is 168.2441804409027 sec tf.Tensor(8.309816, shape=(), dtype=float32) tf.Tensor(0.0045967693, shape=(), dtype=float32)
+[2K[2KTime for epoch 23 is 168.244313955307 sec tf.Tensor(8.573386, shape=(), dtype=float32) tf.Tensor(0.004578006, shape=(), dtype=float32)
+[2K[2KTime for epoch 24 is 168.19627141952515 sec tf.Tensor(8.078478, shape=(), dtype=float32) tf.Tensor(0.005206058, shape=(), dtype=float32)
+[2K[2KTime for epoch 25 is 168.22647953033447 sec tf.Tensor(6.6034584, shape=(), dtype=float32) tf.Tensor(0.016336937, shape=(), dtype=float32)
+[2K[2KTime for epoch 26 is 168.2473692893982 sec tf.Tensor(4.0411053, shape=(), dtype=float32) tf.Tensor(0.06804342, shape=(), dtype=float32)
+[2K[2KTime for epoch 27 is 168.18904781341553 sec tf.Tensor(1.6815064, shape=(), dtype=float32) tf.Tensor(0.44597298, shape=(), dtype=float32)
+[2K[2KTime for epoch 28 is 168.23960065841675 sec tf.Tensor(1.0436542, shape=(), dtype=float32) tf.Tensor(1.1442552, shape=(), dtype=float32)
+[2K[2KTime for epoch 29 is 168.25866961479187 sec tf.Tensor(0.19801158, shape=(), dtype=float32) tf.Tensor(3.3312593, shape=(), dtype=float32)
+[2K[2KTime for epoch 30 is 168.2465250492096 sec tf.Tensor(1.1375145, shape=(), dtype=float32) tf.Tensor(1.202476, shape=(), dtype=float32)
+[2K[2KTime for epoch 31 is 168.2416796684265 sec tf.Tensor(0.9821906, shape=(), dtype=float32) tf.Tensor(0.7713672, shape=(), dtype=float32)
+[2K[2KTime for epoch 32 is 168.2484073638916 sec tf.Tensor(1.9743001, shape=(), dtype=float32) tf.Tensor(0.18790907, shape=(), dtype=float32)
+[2K[2KTime for epoch 33 is 168.26082921028137 sec tf.Tensor(2.7689972, shape=(), dtype=float32) tf.Tensor(0.08019234, shape=(), dtype=float32)
+[2K[2KTime for epoch 34 is 168.25365591049194 sec tf.Tensor(0.7246921, shape=(), dtype=float32) tf.Tensor(1.4259481, shape=(), dtype=float32)
+[2K[2KTime for epoch 35 is 168.23309135437012 sec tf.Tensor(0.5001672, shape=(), dtype=float32) tf.Tensor(1.2289538, shape=(), dtype=float32)
+[2K[2KTime for epoch 36 is 168.24388599395752 sec tf.Tensor(0.77184, shape=(), dtype=float32) tf.Tensor(0.91068435, shape=(), dtype=float32)
+[2K[2KTime for epoch 37 is 168.28190064430237 sec tf.Tensor(0.60224926, shape=(), dtype=float32) tf.Tensor(2.0708249, shape=(), dtype=float32)
+[2K[2KTime for epoch 38 is 168.23249340057373 sec tf.Tensor(1.4486117, shape=(), dtype=float32) tf.Tensor(0.76013774, shape=(), dtype=float32)
+[2K[2KTime for epoch 39 is 168.24918580055237 sec tf.Tensor(0.3586595, shape=(), dtype=float32) tf.Tensor(2.1028469, shape=(), dtype=float32)
+[2K[2KTime for epoch 40 is 168.20754981040955 sec tf.Tensor(0.43885887, shape=(), dtype=float32) tf.Tensor(1.605626, shape=(), dtype=float32)
+[2K[2KTime for epoch 41 is 168.25386834144592 sec tf.Tensor(1.209497, shape=(), dtype=float32) tf.Tensor(0.90550125, shape=(), dtype=float32)
+[2K[2KTime for epoch 42 is 168.29366445541382 sec tf.Tensor(0.6419307, shape=(), dtype=float32) tf.Tensor(1.6896961, shape=(), dtype=float32)
+[2K[2KTime for epoch 43 is 168.23742270469666 sec tf.Tensor(0.9356467, shape=(), dtype=float32) tf.Tensor(0.93874615, shape=(), dtype=float32)
+[2K[2KTime for epoch 44 is 168.2702934741974 sec tf.Tensor(0.47287148, shape=(), dtype=float32) tf.Tensor(1.6043804, shape=(), dtype=float32)
+[2K[2KTime for epoch 45 is 168.25537085533142 sec tf.Tensor(0.7627315, shape=(), dtype=float32) tf.Tensor(1.1385076, shape=(), dtype=float32)
+[2K[2KTime for epoch 46 is 168.29668474197388 sec tf.Tensor(0.61932445, shape=(), dtype=float32) tf.Tensor(1.5547774, shape=(), dtype=float32)
+[2K[2KTime for epoch 47 is 168.2718861103058 sec tf.Tensor(1.3600187, shape=(), dtype=float32) tf.Tensor(0.94554937, shape=(), dtype=float32)
+[2K[2KTime for epoch 48 is 168.2493076324463 sec tf.Tensor(0.4396609, shape=(), dtype=float32) tf.Tensor(1.5876614, shape=(), dtype=float32)
+[2K[2KTime for epoch 49 is 168.24226260185242 sec tf.Tensor(0.8921186, shape=(), dtype=float32) tf.Tensor(1.024072, shape=(), dtype=float32)
+[2K[2KTime for epoch 50 is 168.26318502426147 sec tf.Tensor(1.5580779, shape=(), dtype=float32) tf.Tensor(0.84138036, shape=(), dtype=float32)
+[2K[2KTime for epoch 51 is 168.23863124847412 sec tf.Tensor(0.43664342, shape=(), dtype=float32) tf.Tensor(1.8024321, shape=(), dtype=float32)
 [2K
