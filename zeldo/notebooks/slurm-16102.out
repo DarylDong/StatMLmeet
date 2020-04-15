@@ -58,3 +58,31 @@ WARNING: Logging before flag parsing goes to stderr.
 W0415 14:48:27.974892 140054451738432 deprecation.py:323] From /homes/nramachandra/anaconda3/envs/tf_gpu_14/lib/python3.6/site-packages/tensorflow/python/ops/nn_impl.py:180: add_dispatch_support.<locals>.wrapper (from tensorflow.python.ops.array_ops) is deprecated and will be removed in a future version.
 Instructions for updating:
 Use tf.where in 2.0, which has the same broadcast rule as np.where
+1.14.0
+(90, 64, 64, 64)
+-1.0 73.00424
+0.0 1.0
+-2.7296827 2.321495
+-0.006909342 0.011697252
+d-fake:  tf.Tensor([[0.00010887]], shape=(1, 1), dtype=float32)
+d-real:  tf.Tensor([[5.695399e-05]], shape=(1, 1), dtype=float32)
+training beings
+[2K[2KTime for epoch 1 is 176.2710621356964 sec tf.Tensor(8.225846, shape=(), dtype=float32) tf.Tensor(0.2838504, shape=(), dtype=float32)
+[2K[2KTime for epoch 2 is 168.33606123924255 sec tf.Tensor(8.928865, shape=(), dtype=float32) tf.Tensor(0.018544924, shape=(), dtype=float32)
+[2K[2KTime for epoch 3 is 168.31545734405518 sec tf.Tensor(7.5992093, shape=(), dtype=float32) tf.Tensor(0.0069663143, shape=(), dtype=float32)
+[2K[2KTime for epoch 4 is 168.24813199043274 sec tf.Tensor(81.700775, shape=(), dtype=float32) tf.Tensor(0.0035873302, shape=(), dtype=float32)
+[2K[2KTime for epoch 5 is 168.3048074245453 sec tf.Tensor(7.1642685, shape=(), dtype=float32) tf.Tensor(0.0008539263, shape=(), dtype=float32)
+[2K[2KTime for epoch 6 is 168.30467081069946 sec tf.Tensor(11.1123085, shape=(), dtype=float32) tf.Tensor(0.00044881218, shape=(), dtype=float32)
+[2K[2KTime for epoch 7 is 168.28949332237244 sec tf.Tensor(23.81916, shape=(), dtype=float32) tf.Tensor(0.0033715244, shape=(), dtype=float32)
+[2K[2KTime for epoch 8 is 168.45620584487915 sec tf.Tensor(11.954151, shape=(), dtype=float32) tf.Tensor(0.0017678941, shape=(), dtype=float32)
+[2K[2KTime for epoch 9 is 168.28197741508484 sec tf.Tensor(10.603377, shape=(), dtype=float32) tf.Tensor(0.0012875363, shape=(), dtype=float32)
+[2K[2KTime for epoch 10 is 168.32539653778076 sec tf.Tensor(6.945282, shape=(), dtype=float32) tf.Tensor(0.0021099877, shape=(), dtype=float32)
+[2K[2KTime for epoch 11 is 168.29902863502502 sec tf.Tensor(7.810137, shape=(), dtype=float32) tf.Tensor(0.0025503826, shape=(), dtype=float32)
+[2K[2KTime for epoch 12 is 168.28232502937317 sec tf.Tensor(8.472084, shape=(), dtype=float32) tf.Tensor(0.001643399, shape=(), dtype=float32)
+[2K[2KTime for epoch 13 is 168.2447226047516 sec tf.Tensor(7.0829635, shape=(), dtype=float32) tf.Tensor(0.002292158, shape=(), dtype=float32)
+[2K[2KTime for epoch 14 is 168.26875376701355 sec tf.Tensor(3.9105942, shape=(), dtype=float32) tf.Tensor(0.042830117, shape=(), dtype=float32)
+[2K[2KTime for epoch 15 is 168.30137252807617 sec tf.Tensor(1.3744197, shape=(), dtype=float32) tf.Tensor(0.37271821, shape=(), dtype=float32)
+[2K[2KTime for epoch 16 is 168.2928981781006 sec tf.Tensor(20.277676, shape=(), dtype=float32) tf.Tensor(0.0151532255, shape=(), dtype=float32)
+[2K[2KTime for epoch 17 is 168.2968785762787 sec tf.Tensor(111.239975, shape=(), dtype=float32) tf.Tensor(7.045525e-05, shape=(), dtype=float32)
+[2K[2KTime for epoch 18 is 168.20735955238342 sec tf.Tensor(9.136187, shape=(), dtype=float32) tf.Tensor(0.0033785326, shape=(), dtype=float32)
+[2K
