@@ -1,0 +1,73 @@
+[0] setting up environment
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+2020-04-16 21:44:10.150144: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcuda.so.1
+2020-04-16 21:44:10.666411: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1640] Found device 0 with properties: 
+name: Tesla P100-PCIE-16GB major: 6 minor: 0 memoryClockRate(GHz): 1.3285
+pciBusID: 0000:83:00.0
+2020-04-16 21:44:10.667453: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudart.so.10.0
+2020-04-16 21:44:10.670249: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcublas.so.10.0
+2020-04-16 21:44:10.673265: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcufft.so.10.0
+2020-04-16 21:44:10.674231: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcurand.so.10.0
+2020-04-16 21:44:10.677828: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcusolver.so.10.0
+2020-04-16 21:44:10.680687: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcusparse.so.10.0
+2020-04-16 21:44:10.687735: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudnn.so.7
+2020-04-16 21:44:10.692281: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1763] Adding visible gpu devices: 0
+2020-04-16 21:44:10.693071: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+2020-04-16 21:44:10.745652: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2099925000 Hz
+2020-04-16 21:44:10.753250: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x7f660861d050 executing computations on platform Host. Devices:
+2020-04-16 21:44:10.753357: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): <undefined>, <undefined>
+2020-04-16 21:44:10.877060: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x7f660867bad0 executing computations on platform CUDA. Devices:
+2020-04-16 21:44:10.877097: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): Tesla P100-PCIE-16GB, Compute Capability 6.0
+2020-04-16 21:44:10.878489: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1640] Found device 0 with properties: 
+name: Tesla P100-PCIE-16GB major: 6 minor: 0 memoryClockRate(GHz): 1.3285
+pciBusID: 0000:83:00.0
+2020-04-16 21:44:10.878546: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudart.so.10.0
+2020-04-16 21:44:10.878565: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcublas.so.10.0
+2020-04-16 21:44:10.878580: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcufft.so.10.0
+2020-04-16 21:44:10.878594: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcurand.so.10.0
+2020-04-16 21:44:10.878608: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcusolver.so.10.0
+2020-04-16 21:44:10.878624: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcusparse.so.10.0
+2020-04-16 21:44:10.878639: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudnn.so.7
+2020-04-16 21:44:10.881050: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1763] Adding visible gpu devices: 0
+2020-04-16 21:44:10.881100: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudart.so.10.0
+2020-04-16 21:44:10.885640: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1181] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-04-16 21:44:10.885670: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1187]      0 
+2020-04-16 21:44:10.885695: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1200] 0:   N 
+2020-04-16 21:44:10.889368: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1326] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 15216 MB memory) -> physical GPU (device: 0, name: Tesla P100-PCIE-16GB, pci bus id: 0000:83:00.0, compute capability: 6.0)
+2020-04-16 21:44:12.023554: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcublas.so.10.0
+2020-04-16 21:44:12.243238: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudnn.so.7
+WARNING: Logging before flag parsing goes to stderr.
+W0416 21:44:14.509320 140076076758848 deprecation.py:323] From /homes/nramachandra/anaconda3/envs/tf_gpu_14/lib/python3.6/site-packages/tensorflow/python/ops/nn_impl.py:180: add_dispatch_support.<locals>.wrapper (from tensorflow.python.ops.array_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.where in 2.0, which has the same broadcast rule as np.where
+1.14.0
+(90, 64, 64, 64)
+-1.0 73.00424
+0.0 1.0
+-2.2168133 2.530684
+-0.012994984 0.013609239
+d-fake:  tf.Tensor([[6.182925e-05]], shape=(1, 1), dtype=float32)
+d-real:  tf.Tensor([[0.002427]], shape=(1, 1), dtype=float32)
+training beings
+[2K[2KTime for epoch 1 is 29.073782444000244 sec tf.Tensor(4.6826115, shape=(), dtype=float32) tf.Tensor(0.7308816, shape=(), dtype=float32)
+[2K[2KTime for epoch 2 is 12.487691640853882 sec tf.Tensor(9.933373, shape=(), dtype=float32) tf.Tensor(0.53345096, shape=(), dtype=float32)
+[2K[2KTime for epoch 3 is 12.493245124816895 sec tf.Tensor(5.125123, shape=(), dtype=float32) tf.Tensor(0.3897337, shape=(), dtype=float32)
+[2K
