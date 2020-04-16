@@ -564,4 +564,8 @@ training beings
 [2K[2KTime for epoch 493 is 168.2455759048462 sec tf.Tensor(10.193587, shape=(), dtype=float32) tf.Tensor(0.00094523863, shape=(), dtype=float32)
 [2K[2KTime for epoch 494 is 168.31709122657776 sec tf.Tensor(11.705301, shape=(), dtype=float32) tf.Tensor(0.08820085, shape=(), dtype=float32)
 [2K[2KTime for epoch 495 is 168.35693073272705 sec tf.Tensor(4.71317, shape=(), dtype=float32) tf.Tensor(0.028986271, shape=(), dtype=float32)
+[2K[2KTime for epoch 496 is 168.34739112854004 sec tf.Tensor(8.856768, shape=(), dtype=float32) tf.Tensor(0.0003719711, shape=(), dtype=float32)
+[2K[2KTime for epoch 497 is 168.4157474040985 sec tf.Tensor(14.671684, shape=(), dtype=float32) tf.Tensor(0.001886412, shape=(), dtype=float32)
+[2K[2KTime for epoch 498 is 168.2981584072113 sec tf.Tensor(3.0380611, shape=(), dtype=float32) tf.Tensor(0.7823173, shape=(), dtype=float32)
+[2K[2KTime for epoch 499 is 168.35594415664673 sec tf.Tensor(8.479911, shape=(), dtype=float32) tf.Tensor(0.00391721, shape=(), dtype=float32)
 [2K
