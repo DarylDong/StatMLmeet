@@ -572,4 +572,15 @@ training beings
 [2K[2KTime for epoch 501 is 168.24330115318298 sec tf.Tensor(11.139727, shape=(), dtype=float32) tf.Tensor(0.0059213494, shape=(), dtype=float32)
 [2K[2KTime for epoch 502 is 168.29255557060242 sec tf.Tensor(10.79439, shape=(), dtype=float32) tf.Tensor(0.005886799, shape=(), dtype=float32)
 [2K[2KTime for epoch 503 is 168.23298025131226 sec tf.Tensor(11.178542, shape=(), dtype=float32) tf.Tensor(0.0019443945, shape=(), dtype=float32)
-[2K
+[2K[2KTime for epoch 504 is 168.37052392959595 sec tf.Tensor(6.9589176, shape=(), dtype=float32) tf.Tensor(0.0021060603, shape=(), dtype=float32)
+[2K[2KTime for epoch 505 is 168.30777716636658 sec tf.Tensor(8.530424, shape=(), dtype=float32) tf.Tensor(0.0025535412, shape=(), dtype=float32)
+[2K[2KTime for epoch 506 is 168.26799726486206 sec tf.Tensor(7.384225, shape=(), dtype=float32) tf.Tensor(0.020668395, shape=(), dtype=float32)
+[2K[2KTime for epoch 507 is 168.2375087738037 sec tf.Tensor(6.206705, shape=(), dtype=float32) tf.Tensor(0.004503392, shape=(), dtype=float32)
+[2K[2KTime for epoch 508 is 168.24917244911194 sec tf.Tensor(11.822407, shape=(), dtype=float32) tf.Tensor(0.006335264, shape=(), dtype=float32)
+[2K[2KTime for epoch 509 is 168.22007584571838 sec tf.Tensor(9.749565, shape=(), dtype=float32) tf.Tensor(0.008537192, shape=(), dtype=float32)
+[2K[2KTime for epoch 510 is 168.19575786590576 sec tf.Tensor(17.664545, shape=(), dtype=float32) tf.Tensor(0.049317595, shape=(), dtype=float32)
+[2K[2KTime for epoch 511 is 168.23031067848206 sec tf.Tensor(10.705348, shape=(), dtype=float32) tf.Tensor(0.0005679963, shape=(), dtype=float32)
+[2K[2KTime for epoch 512 is 169.41416239738464 sec tf.Tensor(9.631259, shape=(), dtype=float32) tf.Tensor(0.08446863, shape=(), dtype=float32)
+training ends
+loss shape (512,)
+[86184] End job
